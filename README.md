@@ -43,5 +43,5 @@ jupyter notebook Credit_Risk_Analysis_Using_RF.ipynb
 
 ---
 
-*Author: Your Name*  
+*Created By: Zeeshan Ahmad Wattoo*  
 *Project: Credit Risk Prediction*
