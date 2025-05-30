@@ -2,13 +2,22 @@ import streamlit as st
 import pandas as pd
 import joblib
 from datetime import datetime
+from huggingface_hub import hf_hub_download
 
 st.set_page_config(page_title="Credit Risk App", page_icon="💼", layout="centered")
 
-# Loading model
-model = joblib.load("random_forest_model.pkl")
+# ✅ Load model from Hugging Face Hub using huggingface_hub
+@st.cache_resource
+def load_model():
+    model_path = hf_hub_download(
+        repo_id="ZeeshanWattoo/random-forest-credit-model", 
+        filename="random_forest_model1.pkl"                   
+    )
+    return joblib.load(model_path)
 
-# Category mappings (must match training time)
+model = load_model()
+
+# Category mappings
 home_mapping = {"Own": 2, "Mortgage": 1, "Rent": 0}
 intent_mapping = {
     "education": 0, "home_improvement": 1, "medical": 2,
