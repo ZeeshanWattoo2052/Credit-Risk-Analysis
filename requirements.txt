@@ -6,3 +6,4 @@ matplotlib
 seaborn
 plotly
 yellowbrick
+huggingface_hub
