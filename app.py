@@ -1,8 +1,11 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from datetime import datetime
 
-# Load model
+st.set_page_config(page_title="Credit Risk App", page_icon="💼", layout="centered")
+
+# Loading model
 model = joblib.load("random_forest_model.pkl")
 
 # Category mappings (must match training time)
@@ -13,27 +16,33 @@ intent_mapping = {
 }
 default_mapping = {"Yes": 1, "No": 0}
 
-# App title
-st.title("Credit Risk Prediction App")
-st.markdown("Enter the applicant details to predict the loan status.")
+st.title("💼 Credit Risk Prediction App")
+st.markdown("Enter applicant details below to predict the likelihood of loan repayment or default.")
 
-# Sidebar form
-with st.sidebar:
-    st.header("Applicant Information")
+st.header("📝 Applicant Information")
+col1, col2 = st.columns(2)
+
+with col1:
     age = st.number_input("Age", min_value=18, max_value=100, value=30)
     income = st.number_input("Annual Income", min_value=0.0, value=50000.0)
-    home = st.selectbox("Home Ownership", ["Own", "Mortgage", "Rent"])
     emp_length = st.number_input("Employment Length (years)", min_value=0, max_value=50, value=5)
     intent = st.selectbox("Loan Purpose", ["education", "home_improvement", "medical", "personal", "venture"])
+
+with col2:
+    home = st.selectbox("Home Ownership", ["Own", "Mortgage", "Rent"])
     amount = st.number_input("Loan Amount", min_value=0.0, value=10000.0)
     rate = st.number_input("Interest Rate (%)", min_value=0.0, max_value=100.0, value=10.0)
     default = st.selectbox("Previous Default", ["Yes", "No"])
     cred_length = st.number_input("Credit History Length (years)", min_value=0, max_value=50, value=10)
 
-# Derived feature
-percent_income = amount / income if income != 0 else 0
+if income == 0:
+    st.warning("Annual income must be greater than 0.")
+    st.stop()
 
-# Map categories to match model input
+# Derived feature
+percent_income = amount / income
+
+# Create input dataframe
 input_df = pd.DataFrame({
     "Age": [age],
     "Income": [income],
@@ -47,21 +56,39 @@ input_df = pd.DataFrame({
     "Cred_length": [cred_length]
 })
 
-# Predict
-if st.button("Predict Credit Risk"):
+# Predict and show results
+if st.button("🔍 Predict Credit Risk"):
     prediction = model.predict(input_df)
-    proba = model.predict_proba(input_df)[0]  # Get probabilities for both classes
+    proba = model.predict_proba(input_df)[0]
 
-    # Map prediction to labels
     status = "🟢 Fully Paid" if prediction[0] == 0 else "🔴 Charged Off"
+    st.success(f"**Predicted Loan Status:** {status}")
 
-    # Show prediction
-    st.success(f"Predicted Loan Status: {status}")
+    # Risk metric
+    st.metric(label="Loan Risk Score (Default)", value=f"{proba[1]*100:.1f}%")
 
-    # Show both class probabilities
-    st.write("### Prediction Probabilities")
+    # Probabilities
+    st.subheader("📊 Prediction Probabilities")
     st.write(f"🟢 Fully Paid: **{proba[0] * 100:.2f}%**")
     st.write(f"🔴 Charged Off: **{proba[1] * 100:.2f}%**")
 
+    # Prepare downloadable result
+    result_df = input_df.copy()
+    result_df["Predicted Status"] = status
+    result_df["Fully Paid Probability (%)"] = round(proba[0] * 100, 2)
+    result_df["Charged Off Probability (%)"] = round(proba[1] * 100, 2)
 
+    # Timestamped filename
+    filename = f"credit_risk_prediction_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    
+    # Download button
+    st.download_button(
+        label="💾 Download Prediction as CSV",
+        data=result_df.to_csv(index=False),
+        file_name=filename,
+        mime="text/csv"
+    )
 
+# Footer
+st.markdown("---")
+st.caption("Made with ❤️ by Zeeshan Ahmad Wattoo | BS Software Engineering, Semester 6")
