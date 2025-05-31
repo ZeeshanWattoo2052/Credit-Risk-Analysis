@@ -1,47 +1,60 @@
 # Credit Risk Analysis Using Random Forest
 
-This project uses a machine learning approach to predict credit risk, specifically identifying the likelihood of a loan being charged off. A Random Forest model was used and compared against baseline models like Logistic Regression and K-Nearest Neighbors.
+This project uses a machine learning approach to predict credit risk — specifically identifying the likelihood of a loan being charged off. A **Random Forest** model was used and compared against baseline models like **Logistic Regression** and **K-Nearest Neighbors (KNN)**.
 
-## Dataset
+## 🚀 Live Demo
+Try the interactive Streamlit app on **Hugging Face Spaces**:  
+👉 [Credit Risk Prediction App](https://huggingface.co/spaces/ZeeshanWattoo/Credit-Risk-Analysis)
 
-The dataset contains information about loan applicants, including:
-- Age, Income, Employment Length
-- Loan Purpose (Intent), Loan Amount, Interest Rate
-- Home Ownership, Credit History Length, Previous Default Status
+## 📊 Dataset
+The dataset includes information about loan applicants, such as:
+
+- Age, Income, Employment Length  
+- Loan Purpose (Intent), Loan Amount, Interest Rate  
+- Home Ownership, Credit History Length, Previous Default Status  
 - Loan Approval Status (Target Variable)
 
-Dataset source: [credit_risk.csv](./credit_risk.csv)
+**Source:** `credit_risk.csv`
 
-## Workflow
+## 🔧 Workflow
+- Data Cleaning and Preprocessing  
+- Exploratory Data Analysis (EDA)  
+- Feature Engineering  
+- Model Training using Random Forest  
+- Model Evaluation (Accuracy, Confusion Matrix, Classification Report)  
+- Comparison with Logistic Regression and KNN
 
-1. Data Cleaning and Preprocessing
-2. Exploratory Data Analysis (EDA)
-3. Feature Engineering
-4. Model Training using Random Forest
-5. Model Evaluation (Accuracy, Confusion Matrix, Classification Report)
-6. Comparison with Logistic Regression and KNN
+## ✅ Results
+The **Random Forest model** achieved **91.77% accuracy**, outperforming baseline models.
 
-## Results
-
-The Random Forest model achieved **91.77% accuracy**, outperforming other models.
-
-## Requirements
-
+## 🛠️ Requirements
 Install required packages with:
 
 ```bash
 pip install -r requirements.txt
-```
+▶️ Run Locally
+Open the notebook to explore the analysis:
 
-## Run
-
-You can open the notebook to explore the analysis:
-
-```bash
+bash
+Copy
+Edit
 jupyter notebook Credit_Risk_Analysis_Using_RF.ipynb
-```
+🧠 Technologies Used
+Python 3.9
 
----
+Pandas, NumPy, Matplotlib, Seaborn
 
-*Created By: Zeeshan Ahmad Wattoo*  
-*Project: Credit Risk Prediction*
+Scikit-learn (Random Forest, Logistic Regression, KNN)
+
+Streamlit for the interactive frontend
+
+Docker for containerization
+
+Hugging Face Spaces for deployment
+
+📄 License
+This project is licensed under the CC BY-ND 4.0 license.
+You are free to share this work with attribution, but no derivatives or adaptations are permitted.
+
+Created By: Zeeshan Ahmad Wattoo
+Project: Credit Risk Prediction
