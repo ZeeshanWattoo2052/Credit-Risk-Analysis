@@ -33,14 +33,14 @@ col1, col2 = st.columns(2)
 
 with col1:
     age = st.number_input("Age", min_value=18, max_value=100, value=30)
-    income = st.number_input("Annual Income", min_value=0.0, value=50000.0)
+    income = st.number_input("Annual Income", min_value=0.0, value=50000.0, step=1000.0)
     emp_length = st.number_input("Employment Length (years)", min_value=0, max_value=50, value=5)
     intent = st.selectbox("Loan Purpose", ["education", "home_improvement", "medical", "personal", "venture"])
 
 with col2:
     home = st.selectbox("Home Ownership", ["Own", "Mortgage", "Rent"])
-    amount = st.number_input("Loan Amount", min_value=0.0, value=10000.0)
-    rate = st.number_input("Interest Rate (%)", min_value=0.0, max_value=100.0, value=10.0)
+    amount = st.number_input("Loan Amount", min_value=0.0, value=10000.0, step=500.0)
+    rate = st.number_input("Interest Rate (%)", min_value=0.0, max_value=100.0, value=10.0, step=0.5)
     default = st.selectbox("Previous Default", ["Yes", "No"])
     cred_length = st.number_input("Credit History Length (years)", min_value=0, max_value=50, value=10)
 
